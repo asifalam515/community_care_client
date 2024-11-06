@@ -7,6 +7,8 @@ import Root from "./pages/Root.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import AuthProviders from "./providers/AuthProviders.jsx";
 import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
+import HomePage from "./pages/HomePage/HomePage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -15,8 +17,16 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
+        path: "/",
+        element: <HomePage></HomePage>,
+      },
+      {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/login",
+        element: <Login></Login>,
       },
     ],
   },

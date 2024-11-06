@@ -9,13 +9,23 @@ import {
 } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 import app from "../firebase/firebase.config";
-import { unstable_HistoryRouter } from "react-router-dom";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
 const AuthProviders = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const [userInfo, setUserInfo] = useState(null);
+  useEffect(() => {
+    if (user?.email) {
+      axios
+        .get(`http://localhost:5000/users/${user?.email}`)
+        .then((res) => setUserInfo(res.data));
+    }
+  }, [user?.email]);
+  //   console.log(userInfo);
 
   const auth = getAuth(app);
   const createNewUser = (email, password) => {
@@ -42,7 +52,14 @@ const AuthProviders = ({ children }) => {
       unSubscribe();
     };
   }, []);
-  const authInfo = { createNewUser, loggedInUser, logOut, signInWithGoogle };
+  const authInfo = {
+    createNewUser,
+    loggedInUser,
+    user,
+    logOut,
+    signInWithGoogle,
+    userInfo,
+  };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

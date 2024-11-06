@@ -1,39 +1,31 @@
-import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
-import axios from "axios";
+import { useContext } from "react";
 
-const Register = () => {
-  const { user, createNewUser } = useContext(AuthContext);
-  const handleRegister = (e) => {
+const Login = () => {
+  const { user, loggedInUser } = useContext(AuthContext);
+  const navigate = useNavigate();
+  const handleLogin = (e) => {
     e.preventDefault();
-    const name = e.target.name.value;
     const password = e.target.password.value;
-    const photo = e.target.photo.value;
     const email = e.target.email.value;
-    const user = {
-      name,
-      password,
-      photo,
-      email,
-    };
-    // lets start the register process
-    createNewUser(email, password)
+    // login existing user
+    loggedInUser(email, password)
       .then((result) => {
-        const newUser = result.user;
-        axios.post("http://localhost:5000/users", user);
+        const user = result.user;
+        console.log("logged in user is ", user);
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Your work has been saved",
+          title: "Logged in Success",
           showConfirmButton: false,
           timer: 1500,
         });
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;
-        console.log(errorMessage);
         Swal.fire({
           icon: "error",
           title: "Oops...",
@@ -53,19 +45,7 @@ const Register = () => {
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
-          <form onSubmit={handleRegister} className="card-body">
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Name</span>
-              </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="name"
-                className="input input-bordered"
-                required
-              />
-            </div>
+          <form onSubmit={handleLogin} className="card-body">
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Email</span>
@@ -78,18 +58,7 @@ const Register = () => {
                 required
               />
             </div>
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Photo Url</span>
-              </label>
-              <input
-                type="text"
-                name="photo"
-                placeholder="Photo url"
-                className="input input-bordered"
-                required
-              />
-            </div>
+
             <div className="form-control">
               <label className="label">
                 <span className="label-text">Password</span>
@@ -104,14 +73,14 @@ const Register = () => {
             </div>
             <label className="label">
               <p>
-                Already Registered?{" "}
-                <Link className="btn btn-link" to="/login">
-                  Login Here
+                Do not have account Yet??{" "}
+                <Link className="btn btn-link" to="/register">
+                  Register
                 </Link>
               </p>
             </label>
             <div className="form-control mt-6">
-              <button className="btn btn-primary">Register</button>
+              <button className="btn btn-primary">Login</button>
             </div>
           </form>
         </div>
@@ -120,4 +89,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
