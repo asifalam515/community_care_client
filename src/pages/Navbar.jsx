@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -49,7 +49,17 @@ const Navbar = () => {
       )}
 
       <li>
-        <NavLink to="/profile">My Profile</NavLink>
+        <p className="dropdown">
+          <NavLink>My profile</NavLink>
+          <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+            <li>
+              <Link to="/addPost">Add Volunteer Post</Link>
+            </li>
+            <li>
+              <Link>Manage My Post</Link>
+            </li>
+          </ul>
+        </p>
       </li>
       <li>
         {user && (

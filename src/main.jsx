@@ -9,6 +9,7 @@ import AuthProviders from "./providers/AuthProviders.jsx";
 import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
+import AddVolunteerPost from "./pages/AddVolunteerPost .jsx";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login></Login>,
+      },
+      {
+        path: "/AddVolunteerPost",
+        element: <AddVolunteerPost></AddVolunteerPost>,
       },
     ],
   },
