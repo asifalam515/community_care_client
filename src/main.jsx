@@ -10,6 +10,8 @@ import Register from "./pages/Register.jsx";
 import Login from "./pages/Login.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import AddVolunteerPost from "./pages/AddVolunteerPost .jsx";
+import PrivateRoute from "./routes/PrivateRoute.jsx";
+import VolunteerNeedDetails from "./pages/VolunteerNeedDetails.jsx";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +32,17 @@ const router = createBrowserRouter([
         element: <Login></Login>,
       },
       {
+        path: "/needVolunteerPostDetails",
+        element: <VolunteerNeedDetails></VolunteerNeedDetails>,
+      },
+      {
         path: "/AddVolunteerPost",
-        element: <AddVolunteerPost></AddVolunteerPost>,
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AddVolunteerPost></AddVolunteerPost>
+          </PrivateRoute>
+        ),
       },
     ],
   },

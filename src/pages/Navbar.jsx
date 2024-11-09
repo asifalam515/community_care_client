@@ -53,7 +53,7 @@ const Navbar = () => {
           <NavLink>My profile</NavLink>
           <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
             <li>
-              <Link to="/addPost">Add Volunteer Post</Link>
+              <Link to="/AddVolunteerPost">Add Volunteer Post</Link>
             </li>
             <li>
               <Link>Manage My Post</Link>

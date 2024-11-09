@@ -14,7 +14,7 @@ const VolunteerNeed = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {posts.map((post) => (
+        {posts.slice(0, 6).map((post) => (
           <VolunteerNCard key={post._id} post={post} />
         ))}
       </div>
