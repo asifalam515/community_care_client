@@ -43,6 +43,15 @@ const router = createBrowserRouter([
         ),
       },
       {
+        path: "/needVolunteer",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AllNeedVolunteer></AllNeedVolunteer>
+          </PrivateRoute>
+        ),
+      },
+      {
         path: "/allNeedVolunteerPost/:id",
         element: (
           <PrivateRoute>

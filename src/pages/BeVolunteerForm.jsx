@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { AuthContext } from "../providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const BeVolunteerForm = () => {
   const { postId } = useParams();
@@ -32,7 +33,7 @@ const BeVolunteerForm = () => {
       description: postData.description,
       category: postData.category,
       location: postData.location,
-      number: postData.number,
+      number: parseInt(postData.number, 10), // Ensure number is sent as a numeric type
       deadline: postData.deadline,
       organizer: postData.organizer,
       organizerEmail: postData.organizerEmail,
@@ -43,15 +44,23 @@ const BeVolunteerForm = () => {
     };
 
     try {
-      await axios.post("/volunteer/request", volunteerRequest);
-      alert("Volunteer request submitted successfully");
+      await axios.post(
+        "http://localhost:5000/volunteer/request",
+        volunteerRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      Swal.fire("Request Successfully");
     } catch (error) {
-      console.error("Error submitting volunteer request", error);
+      Swal.fire(error);
     }
   };
 
   if (!postData) {
-    return <div>Loading...</div>;
+    return <span className="loading loading-spinner text-error"></span>;
   }
 
   return (
