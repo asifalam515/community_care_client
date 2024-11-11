@@ -11,7 +11,9 @@ import Login from "./pages/Login.jsx";
 import HomePage from "./pages/HomePage/HomePage.jsx";
 import AddVolunteerPost from "./pages/AddVolunteerPost .jsx";
 import PrivateRoute from "./routes/PrivateRoute.jsx";
-import VolunteerNeedDetails from "./pages/VolunteerNeedDetails.jsx";
+import AllNeedVolunteer from "./pages/HomePage/AllNeedVolunteer.jsx";
+import VolunteerNeedPostDetails from "./pages/VolunteerNeedPostDetails.jsx";
+import BeVolunteerForm from "./pages/BeVolunteerForm.jsx";
 
 const router = createBrowserRouter([
   {
@@ -32,9 +34,30 @@ const router = createBrowserRouter([
         element: <Login></Login>,
       },
       {
-        path: "/needVolunteerPostDetails",
-        element: <VolunteerNeedDetails></VolunteerNeedDetails>,
+        path: "/allNeedVolunteerPost",
+        element: (
+          <PrivateRoute>
+            {" "}
+            <AllNeedVolunteer></AllNeedVolunteer>
+          </PrivateRoute>
+        ),
       },
+      {
+        path: "/allNeedVolunteerPost/:id",
+        element: (
+          <PrivateRoute>
+            <VolunteerNeedPostDetails></VolunteerNeedPostDetails>
+          </PrivateRoute>
+        ),
+        loader: ({ params }) => {
+          return fetch(`http://localhost:5000/volunteer/${params.id}`);
+        },
+      },
+      {
+        path: "/volunteer/request/:postId",
+        element: <BeVolunteerForm></BeVolunteerForm>,
+      },
+
       {
         path: "/AddVolunteerPost",
         element: (

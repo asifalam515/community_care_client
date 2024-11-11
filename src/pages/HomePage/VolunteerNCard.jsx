@@ -1,5 +1,7 @@
+import { Link } from "react-router-dom";
+
 const VolunteerNCard = ({ post }) => {
-  const { thumbnail, title, category, deadline } = post;
+  const { thumbnail, title, category, deadline, _id } = post;
   return (
     <div>
       <div className="card bg-base-100 w-96 shadow-xl">
@@ -11,7 +13,15 @@ const VolunteerNCard = ({ post }) => {
           <button className="btn btn-sm btn-error"> {category} </button>
           <h1>{deadline}</h1>
           <div className="card-actions">
-            <button className="btn btn-primary">View Details </button>
+            {/* <Link to={`volunteer/${_id}`} className="btn btn-primary">
+              View Details{" "}
+            </Link> */}
+            <Link
+              to={`/allNeedVolunteerPost/${_id}`}
+              className="btn btn-primary"
+            >
+              View Details
+            </Link>
           </div>
         </div>
       </div>
