@@ -14,6 +14,8 @@ import PrivateRoute from "./routes/PrivateRoute.jsx";
 import AllNeedVolunteer from "./pages/HomePage/AllNeedVolunteer.jsx";
 import VolunteerNeedPostDetails from "./pages/VolunteerNeedPostDetails.jsx";
 import BeVolunteerForm from "./pages/BeVolunteerForm.jsx";
+import ManageMyPost from "./pages/ManageMyPost/ManageMyPost.jsx";
+import UpdateVolunteerNeedPost from "./pages/ManageMyPost/UpdateVolunteerNeedPost.jsx";
 
 const router = createBrowserRouter([
   {
@@ -64,7 +66,11 @@ const router = createBrowserRouter([
       },
       {
         path: "/volunteer/request/:postId",
-        element: <BeVolunteerForm></BeVolunteerForm>,
+        element: (
+          <PrivateRoute>
+            <BeVolunteerForm></BeVolunteerForm>
+          </PrivateRoute>
+        ),
       },
 
       {
@@ -73,6 +79,22 @@ const router = createBrowserRouter([
           <PrivateRoute>
             {" "}
             <AddVolunteerPost></AddVolunteerPost>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/manageMyPost",
+        element: (
+          <PrivateRoute>
+            <ManageMyPost></ManageMyPost>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/update/:id",
+        element: (
+          <PrivateRoute>
+            <UpdateVolunteerNeedPost></UpdateVolunteerNeedPost>
           </PrivateRoute>
         ),
       },
