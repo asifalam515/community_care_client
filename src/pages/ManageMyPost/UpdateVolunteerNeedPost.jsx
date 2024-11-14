@@ -4,35 +4,54 @@ import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Swal from "sweetalert2";
 
 const UpdateVolunteerNeedPost = () => {
   const { id } = useParams();
+  const [startDate, setStartDate] = useState(null);
   const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
+  const { user, userInfo } = useContext(AuthContext);
   const [post, setPost] = useState(null);
+  console.log("my frontend post is", post);
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/needVolunteerPost/${id}`)
-      .then((res) => setPost(res.data))
+      .get(`http://localhost:5000/update/${id}`)
+      .then((res) => {
+        const data = res.data;
+        data.deadline = new Date(data.deadline);
+        setPost(data);
+      })
       .catch((error) => console.error("Error fetching post:", error));
   }, [id]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPost((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleDateChange = (date) => {
-    setPost((prev) => ({ ...prev, deadline: date }));
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    const thumbnail = e.target.thumbnail.value;
+    const title = e.target.title.value;
+    const category = e.target.category.value;
+    const location = e.target.location.value;
+    const number = e.target.number.value;
+    const deadline = startDate;
+    const organizer = userInfo.name;
+    const organizerEmail = userInfo.email;
+
+    const updatedPost = {
+      user,
+      thumbnail,
+      title,
+      category,
+      location,
+      deadline,
+      number,
+      organizer,
+      organizerEmail,
+    };
     axios
-      .put(`http://localhost:5000/needVolunteerPost/${id}`, post)
+      .put(`http://localhost:5000/update/${id}`, updatedPost)
       .then(() => {
-        navigate("/");
+        Swal.fire("Volunteer Need Post Updated Successfully");
+        navigate("/"); // Navigate back to the main page or a success page
       })
       .catch((error) => console.error("Error updating post:", error));
   };
@@ -43,87 +62,130 @@ const UpdateVolunteerNeedPost = () => {
 
   return (
     <div>
-      <h2>Update Volunteer Need Post</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Thumbnail:</label>
-          <input
-            type="text"
-            name="thumbnail"
-            value={post.thumbnail}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Post Title:</label>
-          <input
-            type="text"
-            name="title"
-            value={post.title}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Description:</label>
-          <textarea
-            name="description"
-            value={post.description}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Category:</label>
-          <select name="category" value={post.category} onChange={handleChange}>
-            <option value="healthcare">Healthcare</option>
-            <option value="education">Education</option>
-            <option value="social_service">Social Service</option>
-            <option value="animal_welfare">Animal Welfare</option>
-          </select>
-        </div>
-        <div>
-          <label>Location:</label>
-          <input
-            type="text"
-            name="location"
-            value={post.location}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>No. of Volunteers Needed:</label>
-          <input
-            type="number"
-            name="number"
-            value={post.number}
-            onChange={handleChange}
-          />
-        </div>
-        <div>
-          <label>Deadline:</label>
-          <DatePicker
-            selected={new Date(post.deadline)}
-            onChange={handleDateChange}
-          />
-        </div>
-        <div>
-          <label>Organizer Name:</label>
-          <input
-            type="text"
-            name="organizer"
-            value={user.displayName}
-            readOnly
-          />
-        </div>
-        <div>
-          <label>Organizer Email:</label>
-          <input
-            type="email"
-            name="organizerEmail"
-            value={user.email}
-            readOnly
-          />
-        </div>
-        <button type="submit">Update Post</button>
+      <h2 className="text-center text-2xl m-2">
+        Update Volunteer Need Post for {post.title}{" "}
+      </h2>
+      <form
+        onSubmit={handleSubmit}
+        noValidate=""
+        action=""
+        className="container flex flex-col mx-auto space-y-12"
+      >
+        <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-gray-800">
+          <div className="space-y-2 col-span-full lg:col-span-1">
+            <p className="font-medium">Update Information</p>
+            <p className="text-xs">
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci
+              fuga autem eum!
+            </p>
+          </div>
+          <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
+            <div className="col-span-full sm:col-span-3">
+              <label htmlFor="Thumbnail" className="text-sm">
+                Thumbnail
+              </label>
+              <input
+                name="thumbnail"
+                defaultValue={post.thumbnail}
+                id="Thumbnail"
+                type="text"
+                placeholder="Thumbnail"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+            <div className="col-span-full sm:col-span-3">
+              <label htmlFor="PostTitle" className="text-sm">
+                Post Title
+              </label>
+              <input
+                defaultValue={post?.title}
+                name="title"
+                id="PostTitle"
+                type="text"
+                placeholder="Post Title"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+            <div className="col-span-full sm:col-span-3">
+              <label htmlFor="Category" className="text-sm">
+                Category
+              </label>
+              <input
+                name="category"
+                defaultValue={post?.category}
+                id="Category"
+                type="text"
+                placeholder="Category"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+            <div className="col-span-full">
+              <label htmlFor="location" className="text-sm">
+                Location
+              </label>
+              <input
+                name="location"
+                defaultValue={post?.location}
+                id="location"
+                type="text"
+                placeholder="Location"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+            <div className="col-span-full sm:col-span-2">
+              <label htmlFor="number" className="text-sm">
+                Number of volunteers Needed
+              </label>
+              <input
+                name="number"
+                defaultValue={post?.number}
+                id="number"
+                type="number"
+                placeholder=""
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+            <div className="col-span-full sm:col-span-2">
+              <label htmlFor="deadline" className="text-sm">
+                Deadline:
+                <DatePicker
+                  selected={post?.deadline}
+                  onChange={(date) => setStartDate(date)}
+                  dateFormat="yyyy/MM/dd"
+                  placeholderText=""
+                  className="block w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                />
+              </label>
+            </div>
+            <div className="col-span-full sm:col-span-2">
+              <label htmlFor="organizer" className="text-sm">
+                Organizer Name
+              </label>
+              <input
+                defaultValue={post?.organizer}
+                name="organizer"
+                id="organizer"
+                type="text"
+                readOnly
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+            <div className="col-span-full sm:col-span-2">
+              <label htmlFor="organizerEmail" className="text-sm">
+                Organizer Email
+              </label>
+              <input
+                name="organizerEmail"
+                defaultValue={post.organizerEmail}
+                id="organizerEmail"
+                type="email"
+                readOnly
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+              />
+            </div>
+          </div>
+        </fieldset>
+        <button className="btn btn-primary">Update your Post</button>
       </form>
     </div>
   );

@@ -2,10 +2,12 @@ import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../providers/AuthProviders";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const MyVolunteerNeedPost = () => {
   const { user } = useContext(AuthContext);
   const [myPost, setMyPost] = useState([]);
+
   useEffect(() => {
     if (user?.email) {
       axios
@@ -15,7 +17,34 @@ const MyVolunteerNeedPost = () => {
     }
   }, [user?.email]);
 
-  //   console.log(myPost);
+  const handleDeletePost = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "Do you really want to delete this post? This process cannot be undone.",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "Cancel",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios
+          .delete(`http://localhost:5000/post/${id}`)
+          .then((res) => {
+            setMyPost(myPost.filter((post) => post._id !== id));
+            Swal.fire("Deleted!", "The post has been deleted.", "success");
+          })
+          .catch((error) => {
+            Swal.fire(
+              "Error!",
+              "There was an error deleting the post.",
+              "error"
+            );
+          });
+      }
+    });
+  };
 
   return (
     <div>
@@ -40,9 +69,14 @@ const MyVolunteerNeedPost = () => {
                 <td>{new Date(post.deadline).toLocaleDateString()}</td>
                 <td>
                   <Link to={`/update/${post._id}`}>
-                    <button className="btn btn-primary">Edit</button>
+                    <button className=" mx-2 btn btn-primary">Update</button>
                   </Link>
-                  <button className="btn btn-danger">Delete</button>
+                  <button
+                    onClick={() => handleDeletePost(post._id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
