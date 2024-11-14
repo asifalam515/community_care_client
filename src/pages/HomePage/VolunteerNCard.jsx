@@ -11,7 +11,7 @@ const VolunteerNCard = ({ post }) => {
         <div className="card-body items-center text-center">
           <h2 className="card-title">{title} </h2>
           <button className="btn btn-sm btn-error"> {category} </button>
-          <h1>{deadline}</h1>
+          <h1>{new Date(deadline).toLocaleDateString()}</h1>
           <div className="card-actions">
             <Link
               to={`/allNeedVolunteerPost/${_id}`}
