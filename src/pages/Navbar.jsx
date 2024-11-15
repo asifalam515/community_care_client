@@ -1,19 +1,16 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
-import axios from "axios";
-import { motion } from "framer-motion";
+import ThemeToggle from "./ThemeToggle";
 
 const Navbar = () => {
   const { user, logOut, userInfo } = useContext(AuthContext);
-
   const navigate = useNavigate();
-  // console.log("navbar user is", user);
+
   const handleLogOutBtn = () => {
     logOut()
       .then(() => {
-        // logout done
         Swal.fire({
           position: "center",
           icon: "success",
@@ -21,19 +18,17 @@ const Navbar = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        //
         navigate("/");
       })
       .catch((error) => {
-        // An error happened.
-
         Swal.fire({
           icon: "error",
           title: "Oops...",
-          text: { error },
+          text: error.message,
         });
       });
   };
+
   const links = (
     <>
       <li>
@@ -44,23 +39,24 @@ const Navbar = () => {
       </li>
       {!user && (
         <li>
-          <NavLink to="/login">login</NavLink>
+          <NavLink to="/login">Login</NavLink>
         </li>
       )}
-
-      <li>
-        <p className="dropdown">
-          <NavLink>My profile</NavLink>
-          <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
-            <li>
-              <Link to="/AddVolunteerPost">Add Volunteer Post</Link>
-            </li>
-            <li>
-              <Link to="/manageMyPost">Manage My Post</Link>
-            </li>
-          </ul>
-        </p>
-      </li>
+      {user && (
+        <li>
+          <p className="dropdown">
+            <NavLink>My profile</NavLink>
+            <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-52 p-2 shadow">
+              <li>
+                <Link to="/AddVolunteerPost">Add Volunteer Post</Link>
+              </li>
+              <li>
+                <Link to="/manageMyPost">Manage My Post</Link>
+              </li>
+            </ul>
+          </p>
+        </li>
+      )}
       <li>
         {user && (
           <div className="navbar-end flex gap-10 mx-2">
@@ -68,23 +64,22 @@ const Navbar = () => {
               <button id="dropdownDelayButton" className="">
                 <img
                   className="w-20 h-10 rounded-lg"
-                  src={userInfo?.photo}
+                  src={userInfo ? userInfo?.photo : user.photoURL}
                   alt="User Profile"
                 />
               </button>
-
               <div className="z-10 hidden group-hover:block bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 absolute left-1/2 transform -translate-x-1/2 mt-2">
                 <ul className="py-2 text-sm text-gray-700 dark:text-gray-200">
                   <li>
                     <span className="block px-4 py-2 font-semibold">
-                      {userInfo?.name}
+                      {userInfo ? userInfo?.name : user.displayName}
                     </span>
                   </li>
                   {user && (
                     <li>
                       <button
                         className="block w-full text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                        onClick={handleLogOutBtn}
+                        onMouseDown={handleLogOutBtn}
                       >
                         Logout
                       </button>
@@ -96,8 +91,14 @@ const Navbar = () => {
           </div>
         )}
       </li>
+      <li>
+        <header>
+          <ThemeToggle />
+        </header>
+      </li>
     </>
   );
+
   return (
     <div className="navbar bg-base-100">
       <div className="navbar-start">
@@ -125,14 +126,11 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        <a className="btn btn-ghost text-4xl">Community Care</a>
+        <a className="btn btn-ghost text-5xl">Community Care</a>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      {/* --------------------------------------- */}
-
-      {/* ---------------------test_------------- */}
     </div>
   );
 };

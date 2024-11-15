@@ -4,11 +4,12 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const AddVolunteerPost = () => {
   const { user, userInfo } = useContext(AuthContext);
   const [startDate, setStartDate] = useState(null);
-
+  const navigate = useNavigate();
   const handleAddPost = (e) => {
     e.preventDefault();
     const thumbnail = e.target.thumbnail.value;
@@ -33,8 +34,6 @@ const AddVolunteerPost = () => {
     };
 
     axios.post("http://localhost:5000/addVolunteer", post).then((res) => {
-      console.log(res.data);
-
       Swal.fire({
         position: "center",
         icon: "success",
@@ -42,23 +41,23 @@ const AddVolunteerPost = () => {
         showConfirmButton: false,
         timer: 1500,
       });
+      navigate("/");
     });
   };
 
   return (
-    <section className="p-6 bg-gray-900 text-gray-100">
+    <section className="p-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100">
       <form
         onSubmit={handleAddPost}
         noValidate=""
         action=""
         className="container flex flex-col mx-auto space-y-12"
       >
-        <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-gray-800">
+        <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm bg-gray-200 dark:bg-gray-800">
           <div className="space-y-2 col-span-full lg:col-span-1">
-            <p className="font-medium">Personal Information</p>
+            <p className="font-medium">Give Information</p>
             <p className="text-xs">
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit. Adipisci
-              fuga autem eum!
+              In order to post, you have to fill in this information
             </p>
           </div>
           <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -71,7 +70,7 @@ const AddVolunteerPost = () => {
                 id="Thumbnail"
                 type="text"
                 placeholder="Thumbnail"
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
             <div className="col-span-full sm:col-span-3">
@@ -83,7 +82,7 @@ const AddVolunteerPost = () => {
                 id="PostTitle"
                 type="text"
                 placeholder="Post Title"
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
             <div className="col-span-full sm:col-span-3">
@@ -95,7 +94,7 @@ const AddVolunteerPost = () => {
                 id="Category"
                 type="text"
                 placeholder="Category"
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
             <div className="col-span-full">
@@ -107,7 +106,7 @@ const AddVolunteerPost = () => {
                 id="location"
                 type="text"
                 placeholder="Location"
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
             <div className="col-span-full sm:col-span-2">
@@ -119,7 +118,7 @@ const AddVolunteerPost = () => {
                 id="number"
                 type="number"
                 placeholder=""
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
             <div className="col-span-full sm:col-span-2">
@@ -130,7 +129,7 @@ const AddVolunteerPost = () => {
                   onChange={(date) => setStartDate(date)}
                   dateFormat="yyyy/MM/dd"
                   placeholderText=""
-                  className="block w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                  className="block w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
                 />
               </label>
             </div>
@@ -144,7 +143,7 @@ const AddVolunteerPost = () => {
                 type="text"
                 value={userInfo?.name}
                 readOnly
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
             <div className="col-span-full sm:col-span-2">
@@ -157,7 +156,7 @@ const AddVolunteerPost = () => {
                 type="email"
                 value={userInfo?.email}
                 readOnly
-                className="w-full rounded-md focus:ring focus:ring-opacity-75 text-gray-900 focus:ring-violet-400 border-gray-700 bg-gray-700"
+                className="w-full rounded-md focus:ring focus:ring-opacity-75 focus:ring-violet-400 border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
               />
             </div>
           </div>

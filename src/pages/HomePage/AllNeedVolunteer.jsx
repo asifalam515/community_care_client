@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import VolunteerNCard from "./VolunteerNCard";
-import { Link } from "react-router-dom";
 
 const AllNeedVolunteer = () => {
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    // Fetch all posts when component mounts
+    // Fetch all posts when the component mounts
     axios
       .get("http://localhost:5000/volunteer")
       .then((res) => setPosts(res.data))
@@ -17,10 +16,12 @@ const AllNeedVolunteer = () => {
 
   const handleSearch = (e) => {
     e.preventDefault();
+
+    // If query is empty, fetch all posts again
     axios
-      .get(`http://localhost:5000/volunteer/search?q=${query}`)
+      .get("http://localhost:5000/volunteer")
       .then((res) => setPosts(res.data))
-      .catch((error) => console.error("Error searching posts:", error));
+      .catch((error) => console.error("Error fetching posts:", error));
   };
 
   return (
@@ -41,9 +42,11 @@ const AllNeedVolunteer = () => {
         </button>
       </form>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {posts.map((post) => (
-          <VolunteerNCard key={post._id} post={post} />
-        ))}
+        {posts.length > 0 ? (
+          posts.map((post) => <VolunteerNCard key={post._id} post={post} />)
+        ) : (
+          <p>No results found</p>
+        )}
       </div>
     </div>
   );

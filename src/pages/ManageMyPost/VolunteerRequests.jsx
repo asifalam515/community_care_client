@@ -1,15 +1,23 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import { AuthContext } from "../../providers/AuthProviders";
 
 const VolunteerRequests = () => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
   const [requests, setRequest] = useState([]);
   useEffect(() => {
-    axios
-      .get("http://localhost:5000/volunteerRequest")
-      .then((res) => setRequest(res.data));
-  }, []);
+    if (user?.email) {
+      axios
+        .get("http://localhost:5000/volunteerRequest", {
+          params: { email: user.email },
+        })
+        .then((res) => setRequest(res.data))
+        .catch((error) => console.error("Error fetching requests:", error));
+    }
+  }, [user?.email]);
   const handleDeleteRequest = (id) => {
     Swal.fire({
       title: "Are you sure?",

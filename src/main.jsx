@@ -16,6 +16,7 @@ import VolunteerNeedPostDetails from "./pages/VolunteerNeedPostDetails.jsx";
 import BeVolunteerForm from "./pages/BeVolunteerForm.jsx";
 import ManageMyPost from "./pages/ManageMyPost/ManageMyPost.jsx";
 import UpdateVolunteerNeedPost from "./pages/ManageMyPost/UpdateVolunteerNeedPost.jsx";
+import { ThemeProvider } from "./providers/ThemeProvider.jsx";
 
 const router = createBrowserRouter([
   {
@@ -105,7 +106,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProviders>
-      <RouterProvider router={router} />
+      <ThemeProvider>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </AuthProviders>
   </StrictMode>
 );

@@ -2,10 +2,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
 import Swal from "sweetalert2";
 import { useContext } from "react";
+import { FaGoogle } from "react-icons/fa";
 
 const Login = () => {
-  const { user, loggedInUser } = useContext(AuthContext);
+  const { user, loggedInUser, signInWithGoogle, setUserInfo } =
+    useContext(AuthContext);
   const navigate = useNavigate();
+  const handleGoogleLogin = () => {
+    signInWithGoogle()
+      .then((result) => {
+        const user = result.user;
+        console.log("logged in user now is", user);
+        Swal.fire("Logged in successfully");
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error,
+        });
+      });
+  };
   const handleLogin = (e) => {
     e.preventDefault();
     const password = e.target.password.value;
@@ -39,9 +56,7 @@ const Login = () => {
         <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold">Login now!</h1>
           <p className="py-6">
-            Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda
-            excepturi exercitationem quasi. In deleniti eaque aut repudiandae et
-            a id nisi.
+            Login Here by providing your email and password
           </p>
         </div>
         <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl">
@@ -81,6 +96,16 @@ const Login = () => {
             </label>
             <div className="form-control mt-6">
               <button className="btn btn-primary">Login</button>
+            </div>
+            <div className="form-control mt-6">
+              <button
+                onClick={handleGoogleLogin}
+                className="btn btn-outline"
+                type="button"
+              >
+                <FaGoogle className="mr-2" />
+                Sign in with Google
+              </button>
             </div>
           </form>
         </div>
