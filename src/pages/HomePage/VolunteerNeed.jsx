@@ -8,7 +8,9 @@ const VolunteerNeed = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/volunteer")
+      .get(
+        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer"
+      )
       .then((res) => setPosts(res.data));
   }, []);
 

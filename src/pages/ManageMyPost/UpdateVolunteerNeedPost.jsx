@@ -16,7 +16,9 @@ const UpdateVolunteerNeedPost = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/update/${id}`)
+      .get(
+        `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/update/${id}`
+      )
       .then((res) => {
         const data = res.data;
         data.deadline = new Date(data.deadline);
@@ -48,7 +50,10 @@ const UpdateVolunteerNeedPost = () => {
       organizerEmail,
     };
     axios
-      .put(`http://localhost:5000/update/${id}`, updatedPost)
+      .put(
+        `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/update/${id}`,
+        updatedPost
+      )
       .then(() => {
         Swal.fire("Volunteer Need Post Updated Successfully");
         navigate("/"); // Navigate back to the main page or a success page

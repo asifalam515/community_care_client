@@ -21,7 +21,9 @@ const AuthProviders = ({ children }) => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/users/${user?.email}`)
+        .get(
+          `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/users/${user?.email}`
+        )
         .then((res) => setUserInfo(res.data));
     }
   }, [user?.email]);

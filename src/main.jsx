@@ -62,7 +62,9 @@ const router = createBrowserRouter([
           </PrivateRoute>
         ),
         loader: ({ params }) => {
-          return fetch(`http://localhost:5000/volunteer/${params.id}`);
+          return fetch(
+            `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer/${params.id}`
+          );
         },
       },
       {

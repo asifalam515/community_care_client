@@ -33,16 +33,21 @@ const AddVolunteerPost = () => {
       organizerEmail,
     };
 
-    axios.post("http://localhost:5000/addVolunteer", post).then((res) => {
-      Swal.fire({
-        position: "center",
-        icon: "success",
-        title: "Post Added",
-        showConfirmButton: false,
-        timer: 1500,
+    axios
+      .post(
+        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/addVolunteer",
+        post
+      )
+      .then((res) => {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Post Added",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        navigate("/");
       });
-      navigate("/");
-    });
   };
 
   return (

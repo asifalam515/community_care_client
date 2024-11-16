@@ -22,7 +22,10 @@ const Register = () => {
     createNewUser(email, password)
       .then((result) => {
         const newUser = result.user;
-        axios.post("http://localhost:5000/users", user);
+        axios.post(
+          "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/users",
+          user
+        );
         Swal.fire({
           position: "center",
           icon: "success",

@@ -12,7 +12,9 @@ const MyVolunteerNeedPost = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get(`http://localhost:5000/needVolunteerPost/${user.email}`)
+        .get(
+          `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/needVolunteerPost/${user.email}`
+        )
         .then((res) => setMyPost(res.data))
         .catch((error) => console.error("Error fetching posts:", error));
     }
@@ -31,7 +33,9 @@ const MyVolunteerNeedPost = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/post/${id}`)
+          .delete(
+            `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/post/${id}`
+          )
           .then((res) => {
             setMyPost(myPost.filter((post) => post._id !== id));
             Swal.fire("Deleted!", "The post has been deleted.", "success");

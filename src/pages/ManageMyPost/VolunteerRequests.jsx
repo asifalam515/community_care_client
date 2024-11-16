@@ -11,9 +11,12 @@ const VolunteerRequests = () => {
   useEffect(() => {
     if (user?.email) {
       axios
-        .get("http://localhost:5000/volunteerRequest", {
-          params: { email: user.email },
-        })
+        .get(
+          "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteerRequest",
+          {
+            params: { email: user.email },
+          }
+        )
         .then((res) => setRequest(res.data))
         .catch((error) => console.error("Error fetching requests:", error));
     }
@@ -31,7 +34,9 @@ const VolunteerRequests = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`http://localhost:5000/volunteerRequest/${id}`)
+          .delete(
+            `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteerRequest/${id}`
+          )
           .then((res) => {
             setRequest(requests.filter((post) => post._id !== id));
             Swal.fire("Deleted!", "The request has been cancelled.", "success");
