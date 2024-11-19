@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import VolunteerNCard from "./VolunteerNCard";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const VolunteerNeed = () => {
   const [posts, setPosts] = useState([]);
@@ -9,10 +10,17 @@ const VolunteerNeed = () => {
   useEffect(() => {
     axios
       .get(
-        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer"
+        "https://community-care-server-asibul-alams-projects.vercel.app/volunteer"
       )
       .then((res) => setPosts(res.data));
   }, []);
+  // useEffect(() => {
+  //   fetch(
+  //     "https://community-care-server-asibul-alams-projects.vercel.app/volunteer"
+  //   )
+  //     .then((res) => res.json())
+  //     .then((data) => setPosts(data));
+  // }, []);
 
   return (
     <div className="container mx-auto p-4">

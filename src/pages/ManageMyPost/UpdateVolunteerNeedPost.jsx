@@ -17,7 +17,7 @@ const UpdateVolunteerNeedPost = () => {
   useEffect(() => {
     axios
       .get(
-        `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/update/${id}`
+        `https://community-care-server-asibul-alams-projects.vercel.app/update/${id}`
       )
       .then((res) => {
         const data = res.data;
@@ -51,7 +51,7 @@ const UpdateVolunteerNeedPost = () => {
     };
     axios
       .put(
-        `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/update/${id}`,
+        `https://community-care-server-asibul-alams-projects.vercel.app/update/${id}`,
         updatedPost
       )
       .then(() => {

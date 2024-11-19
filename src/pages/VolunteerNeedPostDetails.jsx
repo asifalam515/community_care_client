@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, useLoaderData } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
 const VolunteerNeedPostDetails = () => {
   const postDetails = useLoaderData();
@@ -24,6 +25,9 @@ const VolunteerNeedPostDetails = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Volunteer Need Post</title>
+      </Helmet>
       <div className="p-5 mx-auto sm:p-10 md:p-16 dark:bg-gray-900 dark:text-gray-100">
         <div className="flex flex-col max-w-3xl mx-auto overflow-hidden rounded">
           <img

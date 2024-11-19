@@ -3,16 +3,16 @@ import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../providers/AuthProviders";
+import { Helmet } from "react-helmet-async";
 
 const VolunteerRequests = () => {
   const { user } = useContext(AuthContext);
-  console.log(user);
   const [requests, setRequest] = useState([]);
   useEffect(() => {
     if (user?.email) {
       axios
         .get(
-          "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteerRequest",
+          "https://community-care-server-asibul-alams-projects.vercel.app/volunteerRequest",
           {
             params: { email: user.email },
           }
@@ -35,7 +35,7 @@ const VolunteerRequests = () => {
       if (result.isConfirmed) {
         axios
           .delete(
-            `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteerRequest/${id}`
+            `https://community-care-server-asibul-alams-projects.vercel.app/volunteerRequest/${id}`
           )
           .then((res) => {
             setRequest(requests.filter((post) => post._id !== id));
@@ -53,6 +53,9 @@ const VolunteerRequests = () => {
   };
   return (
     <div>
+      <Helmet>
+        <title>Volunteer Request</title>
+      </Helmet>
       <h1 className="text-3xl">My volunteer Request</h1>
       <div className="overflow-x-auto">
         <table className="table">

@@ -17,7 +17,7 @@ import BeVolunteerForm from "./pages/BeVolunteerForm.jsx";
 import ManageMyPost from "./pages/ManageMyPost/ManageMyPost.jsx";
 import UpdateVolunteerNeedPost from "./pages/ManageMyPost/UpdateVolunteerNeedPost.jsx";
 import { ThemeProvider } from "./providers/ThemeProvider.jsx";
-
+import { HelmetProvider } from "react-helmet-async";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -63,7 +63,7 @@ const router = createBrowserRouter([
         ),
         loader: ({ params }) => {
           return fetch(
-            `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer/${params.id}`
+            `https://community-care-server-asibul-alams-projects.vercel.app/volunteer/${params.id}`
           );
         },
       },
@@ -107,10 +107,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <AuthProviders>
-      <ThemeProvider>
-        <RouterProvider router={router} />
-      </ThemeProvider>
-    </AuthProviders>
+    <HelmetProvider>
+      <AuthProviders>
+        <ThemeProvider>
+          <RouterProvider router={router} />
+        </ThemeProvider>
+      </AuthProviders>
+    </HelmetProvider>
   </StrictMode>
 );

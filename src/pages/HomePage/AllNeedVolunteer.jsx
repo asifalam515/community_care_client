@@ -7,10 +7,9 @@ const AllNeedVolunteer = () => {
   const [query, setQuery] = useState("");
 
   useEffect(() => {
-    // Fetch all posts when the component mounts
     axios
       .get(
-        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer"
+        "https://community-care-server-asibul-alams-projects.vercel.app/volunteer"
       )
       .then((res) => setPosts(res.data))
       .catch((error) => console.error("Error fetching posts:", error));
@@ -22,7 +21,7 @@ const AllNeedVolunteer = () => {
     // If query is empty, fetch all posts again
     axios
       .get(
-        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer"
+        "https://community-care-server-asibul-alams-projects.vercel.app/volunteer"
       )
       .then((res) => setPosts(res.data))
       .catch((error) => console.error("Error fetching posts:", error));

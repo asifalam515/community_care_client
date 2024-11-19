@@ -23,7 +23,7 @@ const Register = () => {
       .then((result) => {
         const newUser = result.user;
         axios.post(
-          "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/users",
+          "https://community-care-server-asibul-alams-projects.vercel.app/users",
           user
         );
         Swal.fire({

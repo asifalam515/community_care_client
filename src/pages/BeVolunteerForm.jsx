@@ -14,7 +14,7 @@ const BeVolunteerForm = () => {
     const fetchPostData = async () => {
       try {
         const response = await axios.get(
-          `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer/${postId}`
+          `https://community-care-server-asibul-alams-projects.vercel.app/volunteer/${postId}`
         );
         setPostData(response.data);
       } catch (error) {
@@ -45,7 +45,7 @@ const BeVolunteerForm = () => {
 
     try {
       await axios.post(
-        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/volunteer/request",
+        "https://community-care-server-asibul-alams-projects.vercel.app/volunteer/request",
         volunteerRequest,
         {
           headers: {

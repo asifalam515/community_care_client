@@ -35,7 +35,7 @@ const AddVolunteerPost = () => {
 
     axios
       .post(
-        "https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/addVolunteer",
+        "https://community-care-server-asibul-alams-projects.vercel.app/addVolunteer",
         post
       )
       .then((res) => {

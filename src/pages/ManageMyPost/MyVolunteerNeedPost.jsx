@@ -13,7 +13,7 @@ const MyVolunteerNeedPost = () => {
     if (user?.email) {
       axios
         .get(
-          `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/needVolunteerPost/${user.email}`
+          `https://community-care-server-asibul-alams-projects.vercel.app/needVolunteerPost/${user.email}`
         )
         .then((res) => setMyPost(res.data))
         .catch((error) => console.error("Error fetching posts:", error));
@@ -34,7 +34,7 @@ const MyVolunteerNeedPost = () => {
       if (result.isConfirmed) {
         axios
           .delete(
-            `https://community-care-server-bkaruozyf-asibul-alams-projects.vercel.app/post/${id}`
+            `https://community-care-server-asibul-alams-projects.vercel.app/post/${id}`
           )
           .then((res) => {
             setMyPost(myPost.filter((post) => post._id !== id));
